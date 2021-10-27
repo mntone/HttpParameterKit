@@ -38,21 +38,25 @@ public extension Collection where Iterator.Element == HttpParameter {
 					return try uint32Item.query(parameters[uint32Item.name] as? UInt32).toArray()
 				case let uint64Item as HPUInt64:
 					return try uint64Item.query(parameters[uint64Item.name] as? UInt64).toArray()
-#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
-				case let float16Item as HPFloat16:
-					return try float16Item.query(parameters[float16Item.name] as? Float16).toArray()
-#endif
 				case let floatItem as HPFloat:
 					return try floatItem.query(parameters[floatItem.name] as? Float).toArray()
 				case let doubleItem as HPDouble:
 					return try doubleItem.query(parameters[doubleItem.name] as? Double).toArray()
-#if swift(>=1.1) && os(macOS)
-				case let float80Item as HPFloat80:
-					return try float80Item.query(parameters[float80Item.name] as? Float80).toArray()
-#endif
 				case let patternItem as HPPattern:
 					return try patternItem.query(parameters)
 				default:
+#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
+					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
+					   let float16Item = item as? HPFloat16 {
+						return try float16Item.query(parameters[float16Item.name] as? Float16).toArray()
+					}
+#endif
+#if swift(>=1.1) && os(macOS)
+					if #available(macOS 10.10, *),
+					   let float80Item = item as? HPFloat80 {
+						return try float80Item.query(parameters[float80Item.name] as? Float80).toArray()
+					}
+#endif
 					throw HttpParameterBuildError.invalidType
 				}
 			}.joined(separator: "&")
@@ -91,21 +95,25 @@ public extension Collection where Iterator.Element == HttpParameter {
 					return try uint32Item.xml(parameters[uint32Item.name] as? UInt32).toArray()
 				case let uint64Item as HPUInt64:
 					return try uint64Item.xml(parameters[uint64Item.name] as? UInt64).toArray()
-#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
-				case let float16Item as HPFloat16:
-					return try float16Item.xml(parameters[float16Item.name] as? Float16).toArray()
-#endif
 				case let floatItem as HPFloat:
 					return try floatItem.xml(parameters[floatItem.name] as? Float).toArray()
 				case let doubleItem as HPDouble:
 					return try doubleItem.xml(parameters[doubleItem.name] as? Double).toArray()
-#if swift(>=1.1) && os(macOS)
-				case let float80Item as HPFloat80:
-					return try float80Item.xml(parameters[float80Item.name] as? Float80).toArray()
-#endif
 				case let patternItem as HPPattern:
 					return try patternItem.xml(parameters)
 				default:
+#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
+					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
+					   let float16Item = item as? HPFloat16 {
+						return try float16Item.xml(parameters[float16Item.name] as? Float16).toArray()
+					}
+#endif
+#if swift(>=1.1) && os(macOS)
+					if #available(macOS 10.10, *),
+					   let float80Item = item as? HPFloat80 {
+						return try float80Item.xml(parameters[float80Item.name] as? Float80).toArray()
+					}
+#endif
 					throw HttpParameterBuildError.invalidType
 				}
 			}.joined()
@@ -145,21 +153,25 @@ public extension Collection where Iterator.Element == HttpParameter {
 					return try uint32Item.json(parameters[uint32Item.name] as? UInt32).toArray()
 				case let uint64Item as HPUInt64:
 					return try uint64Item.json(parameters[uint64Item.name] as? UInt64).toArray()
-#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
-				case let float16Item as HPFloat16:
-					return try float16Item.json(parameters[float16Item.name] as? Float16).toArray()
-#endif
 				case let floatItem as HPFloat:
 					return try floatItem.json(parameters[floatItem.name] as? Float).toArray()
 				case let doubleItem as HPDouble:
 					return try doubleItem.json(parameters[doubleItem.name] as? Double).toArray()
-#if swift(>=1.1) && os(macOS)
-				case let float80Item as HPFloat80:
-					return try float80Item.json(parameters[float80Item.name] as? Float80).toArray()
-#endif
 				case let patternItem as HPPattern:
 					return try patternItem.json(parameters)
 				default:
+#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
+					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
+					   let float16Item = item as? HPFloat16 {
+						return try float16Item.json(parameters[float16Item.name] as? Float16).toArray()
+					}
+#endif
+#if swift(>=1.1) && os(macOS)
+					if #available(macOS 10.10, *),
+					   let float80Item = item as? HPFloat80 {
+						return try float80Item.json(parameters[float80Item.name] as? Float80).toArray()
+					}
+#endif
 					throw HttpParameterBuildError.invalidType
 				}
 			}.joined(separator: ",")

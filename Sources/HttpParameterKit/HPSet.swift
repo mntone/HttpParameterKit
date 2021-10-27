@@ -54,15 +54,23 @@ extension HPSet {
 					return try uint32Item.query(value[uint32Item.name] as? UInt32)
 				case let uint64Item as HPUInt64:
 					return try uint64Item.query(value[uint64Item.name] as? UInt64)
-#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
-				case let float16Item as HPFloat16:
-					return try float16Item.query(value[float16Item.name] as? Float16)
-#endif
 				case let floatItem as HPFloat:
 					return try floatItem.query(value[floatItem.name] as? Float)
 				case let doubleItem as HPDouble:
 					return try doubleItem.query(value[doubleItem.name] as? Double)
 				default:
+#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
+					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
+					   let float16Item = item as? HPFloat16 {
+						return try float16Item.query(value[float16Item.name] as? Float16)
+					}
+#endif
+#if swift(>=1.1) && os(macOS)
+					if #available(macOS 10.10, *),
+					   let float80Item = item as? HPFloat80 {
+						return try float80Item.query(value[float80Item.name] as? Float80)
+					}
+#endif
 					throw HttpParameterBuildError.invalidType
 				}
 			}
@@ -101,15 +109,23 @@ extension HPSet {
 					return try uint32Item.xml(value[uint32Item.name] as? UInt32)
 				case let uint64Item as HPUInt64:
 					return try uint64Item.xml(value[uint64Item.name] as? UInt64)
-#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
-				case let float16Item as HPFloat16:
-					return try float16Item.xml(value[float16Item.name] as? Float16)
-#endif
 				case let floatItem as HPFloat:
 					return try floatItem.xml(value[floatItem.name] as? Float)
 				case let doubleItem as HPDouble:
 					return try doubleItem.xml(value[doubleItem.name] as? Double)
 				default:
+#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
+					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
+					   let float16Item = item as? HPFloat16 {
+						return try float16Item.xml(value[float16Item.name] as? Float16)
+					}
+#endif
+#if swift(>=1.1) && os(macOS)
+					if #available(macOS 10.10, *),
+					   let float80Item = item as? HPFloat80 {
+						return try float80Item.xml(value[float80Item.name] as? Float80)
+					}
+#endif
 					throw HttpParameterBuildError.invalidType
 				}
 			}
@@ -148,15 +164,23 @@ extension HPSet {
 					return try uint32Item.json(value[uint32Item.name] as? UInt32)
 				case let uint64Item as HPUInt64:
 					return try uint64Item.json(value[uint64Item.name] as? UInt64)
-#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
-				case let float16Item as HPFloat16:
-					return try float16Item.json(value[float16Item.name] as? Float16)
-#endif
 				case let floatItem as HPFloat:
 					return try floatItem.json(value[floatItem.name] as? Float)
 				case let doubleItem as HPDouble:
 					return try doubleItem.json(value[doubleItem.name] as? Double)
 				default:
+#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
+					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
+					   let float16Item = item as? HPFloat16 {
+						return try float16Item.json(value[float16Item.name] as? Float16)
+					}
+#endif
+#if swift(>=1.1) && os(macOS)
+					if #available(macOS 10.10, *),
+					   let float80Item = item as? HPFloat80 {
+						return try float80Item.json(value[float80Item.name] as? Float80)
+					}
+#endif
 					throw HttpParameterBuildError.invalidType
 				}
 			}
