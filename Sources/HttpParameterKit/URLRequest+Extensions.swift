@@ -1,0 +1,51 @@
+import Foundation
+
+public extension URLRequest {
+	mutating func setBodyAsQuery(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
+		do {
+			let query = try define.query(parameters)
+			httpBody = query.data(using: .utf8)!
+		} catch {
+			throw error
+		}
+
+		setContentType("application/x-www-form-urlencoded")
+	}
+
+	mutating func setBodyAsXml(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
+		do {
+			let query = try define.query(parameters)
+			httpBody = query.data(using: .utf8)!
+		} catch {
+			throw error
+		}
+
+		setContentType("application/xml")
+	}
+
+	mutating func setBodyAsJson(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
+		do {
+			let query = try define.query(parameters)
+			httpBody = query.data(using: .utf8)!
+		} catch {
+			throw error
+		}
+
+		setContentType("application/json")
+	}
+
+	mutating func setBodyAsMsgPack(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
+		do {
+			let query = try define.msgpack(parameters)
+			httpBody = query
+		} catch {
+			throw error
+		}
+
+		setContentType("application/x-msgpack")
+	}
+
+	private mutating func setContentType(_ mineType: String) {
+		setValue("\(mineType); charset=utf-8", forHTTPHeaderField: "Content-Type")
+	}
+}

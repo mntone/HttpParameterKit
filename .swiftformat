@@ -1,0 +1,25 @@
+--rules wrapArguments,wrapAttributes
+
+# Options
+--guardelse same-line
+--header strip
+--indent tab
+--tabwidth 4
+--smarttabs disabled
+--ifdef outdent
+--self init-only
+--semicolons never
+--ranges no-space
+--trimwhitespace always
+--wrapparameters after-first
+--wrapcollections before-first
+--closingparen same-line
+--funcattributes prev-line
+--typeattributes prev-line
+--varattributes prev-line
+
+# Rules
+--rules andOperator,anyObjectProtocol,blankLinesAroundMark,blankLinesAtEndOfScope,blankLinesAtStartOfScope,blankLinesBetweenScopes,braces,consecutiveBlankLines,consecutiveSpaces,duplicateImports,elseOnSameLine,emptyBraces,extensionAccessControl,fileHeader,indent,initCoderUnavailable,isEmpty,leadingDelimiters,linebreakAtEndOfFile,linebreaks,modifierOrder,preferKeyPath,redundantBackticks,redundantBreak,redundantExtensionACL,redundantFileprivate,redundantGet,redundantInit,redundantLet,redundantLetError,redundantNilInit,redundantObjc,redundantParens,redundantPattern,redundantRawValues,redundantReturn,redundantSelf,redundantVoidReturnType,semicolons,sortedImports,spaceAroundBraces,spaceAroundBrackets,spaceAroundComments,spaceAroundGenerics,spaceAroundOperators,spaceAroundParens,spaceInsideBraces,spaceInsideBrackets,spaceInsideComments,spaceInsideGenerics,spaceInsideParens,strongOutlets,strongifiedSelf,todos,trailingClosures,trailingCommas,trailingSpace,typeSugar,void,wrapEnumCases
+
+# Disable
+--disable numberFormatting
