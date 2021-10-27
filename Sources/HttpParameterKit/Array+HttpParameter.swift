@@ -236,11 +236,19 @@ public extension Collection where Iterator.Element == HttpParameter {
 					stream.write(UInt16(count))
 				}
 
+#if arch(i386) || arch(arm)
+			case 0x0001_0000...0x7FFF_FFFF:
+				data = MessagePackUtil.write(capacity: 5) { stream in
+					stream.write(0xDF)
+					stream.write(UInt32(count))
+				}
+#else
 			case 0x0001_0000...0xFFFF_FFFF:
 				data = MessagePackUtil.write(capacity: 5) { stream in
 					stream.write(0xDF)
 					stream.write(UInt32(count))
 				}
+#endif
 
 			default:
 				throw HttpParameterBuildError.unreachable

@@ -11,7 +11,9 @@ struct MessagePackUtil {
 	static func prepare(string val: String) -> (Int, StringMode) {
 		let utf8 = val.utf8
 		let count = utf8.count
+#if !arch(i386) && !arch(arm)
 		precondition(count <= 0xFFFF_FFFF)
+#endif
 
 		if count <= 0x19 {
 			return (1 + count, .uint4)
