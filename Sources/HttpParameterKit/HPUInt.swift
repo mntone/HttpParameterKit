@@ -63,14 +63,14 @@ extension HPUInt: HttpParameterCodable, HPBinaryIntegerSupport {
 			data = MessagePackUtil.write(capacity: count + 5) { stream in
 				stream.write(name, mode: mode)
 				stream.write(UInt8(0xCE))
-#if arch(i386) || arch(arm)
+#if os(watchOS) || arch(i386) || arch(arm)
 				stream.write(value.bigEndian)
 #else
 				stream.write(UInt32(value).bigEndian)
 #endif
 			}
 
-#if !arch(i386) && !arch(arm)
+#if !os(watchOS) && !arch(i386) && !arch(arm)
 		case 0x0000_0001_0000_0000...0xFFFF_FFFF_FFFF_FFFF:
 			data = MessagePackUtil.write(capacity: count + 9) { stream in
 				stream.write(name, mode: mode)

@@ -39,7 +39,7 @@ extension HPCGFloat: HttpParameterInternal {}
 extension HPCGFloat: HttpParameterCodable, HPFloatingPointSupport {
 	func dataMsgPack(_ value: CGFloat) throws -> Data {
 		let (count, mode) = MessagePackUtil.prepare(string: name)
-#if arch(i386) || arch(arm)
+#if os(watchOS) || arch(i386) || arch(arm)
 		let data = MessagePackUtil.write(capacity: count + 5) { stream in
 			stream.write(name, mode: mode)
 			stream.write(UInt8(0xCA))
