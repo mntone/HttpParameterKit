@@ -12,10 +12,10 @@ public extension URLRequest {
 		setContentType("application/x-www-form-urlencoded")
 	}
 
-	mutating func setBodyAsXml(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
+	mutating func setBodyAsXml(_ parameters: [String: AnyHashable], define: [HttpParameter], root rootName: String) throws {
 		do {
-			let query = try define.query(parameters)
-			httpBody = query.data(using: .utf8)!
+			let xml = try define.xml(parameters, root: rootName)
+			httpBody = xml.data(using: .utf8)!
 		} catch {
 			throw error
 		}
@@ -25,8 +25,8 @@ public extension URLRequest {
 
 	mutating func setBodyAsJson(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
 		do {
-			let query = try define.query(parameters)
-			httpBody = query.data(using: .utf8)!
+			let json = try define.json(parameters)
+			httpBody = json.data(using: .utf8)!
 		} catch {
 			throw error
 		}
