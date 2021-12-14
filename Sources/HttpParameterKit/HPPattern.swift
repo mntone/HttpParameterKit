@@ -9,9 +9,9 @@ public struct HPPattern: HttpParameter {
 }
 
 extension HPPattern {
-	func query(_ value: [String: AnyHashable]) throws -> [String] {
+	func query(_ value: [String: AnyHashable], encoding: _QueryUtil.Encoding) throws -> [String] {
 		guard let targetSet = sets.first(where: { $0.validateSet(value) }) else { return [] }
-		return try targetSet.query(value)
+		return try targetSet.query(value, encoding: encoding)
 	}
 
 	func xml(_ value: [String: AnyHashable]) throws -> [String] {

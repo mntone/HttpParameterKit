@@ -1,9 +1,9 @@
 import Foundation
 
 public extension URLRequest {
-	mutating func setBodyAsQuery(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
+	mutating func setBodyAsQuery(_ parameters: [String: AnyHashable], define: [HttpParameter], encoding: _QueryUtil.Encoding = .default) throws {
 		do {
-			let query = try define.query(parameters)
+			let query = try define.query(parameters, encoding: encoding)
 			httpBody = query.data(using: .utf8)!
 		} catch {
 			throw error

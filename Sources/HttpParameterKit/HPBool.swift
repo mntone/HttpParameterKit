@@ -86,9 +86,11 @@ extension HPBool: HttpParameterInternal {}
 // MARK: - HttpParameterCodable
 
 extension HPBool: HttpParameterCodable {
-	func query(_ value: Bool?) throws -> String? {
+	func query(_ value: Bool?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if let val = value, !suppressDefault || val != defaultValue {
-			return "\(name.toQuery())=\(val ? trueOutput.toQuery() : falseOutput.toQuery())"
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(as: val ? trueOutput : falseOutput, encoding: encoding)
+			return "\(_name)=\(_val)"
 		} else {
 			return nil
 		}

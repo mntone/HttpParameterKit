@@ -19,11 +19,13 @@ extension HPString: HttpParameterInternal {}
 // MARK: - HttpParameterCodable
 
 extension HPString: HttpParameterCodable {
-	func query(_ value: String?) throws -> String? {
+	func query(_ value: String?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if let val = value {
-			return "\(name.toQuery())=\(val.toQuery())"
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			return "\(_name)=\(_QueryUtil.query(as: val, encoding: encoding))"
 		} else if !suppressDefault {
-			return "\(name.toQuery())=\(defaultValue.toQuery())"
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			return "\(_name)=\(_QueryUtil.query(as: defaultValue, encoding: encoding))"
 		} else {
 			return nil
 		}

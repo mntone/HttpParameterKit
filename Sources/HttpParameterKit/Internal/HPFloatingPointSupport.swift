@@ -16,15 +16,18 @@ protocol HPFloatingPointSupport: HttpParameter {
 // MARK: -
 
 extension HPFloatingPointSupport {
-	func query(_ value: T?) throws -> String? {
+	func query(_ value: T?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if let val = value {
 			if clamped {
 				if let min = minValue, val < min {
-					return "\(name.toQuery())=\(min)"
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return "\(_name)=\(min)"
 				} else if let max = maxValue, val > max {
-					return "\(name.toQuery())=\(max)"
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return "\(_name)=\(max)"
 				} else if !suppressDefault || val != defaultValue {
-					return "\(name.toQuery())=\(val)"
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return "\(_name)=\(val)"
 				} else {
 					return nil
 				}
@@ -41,13 +44,15 @@ extension HPFloatingPointSupport {
 				}
 
 				if !suppressDefault || val != defaultValue {
-					return "\(name.toQuery())=\(val)"
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return "\(_name)=\(val)"
 				} else {
 					return nil
 				}
 			}
 		} else if !suppressDefault {
-			return "\(name.toQuery())=\(defaultValue)"
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			return "\(_name)=\(defaultValue)"
 		} else {
 			return nil
 		}

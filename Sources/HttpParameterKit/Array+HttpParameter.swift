@@ -8,53 +8,53 @@ private extension Optional {
 }
 
 public extension Collection where Iterator.Element == HttpParameter {
-	func query(_ parameters: [String: AnyHashable]) throws -> String {
+	func query(_ parameters: [String: AnyHashable], encoding: _QueryUtil.Encoding = .default) throws -> String {
 		do {
 			return try flatMap { item -> [String] in
 				switch item {
 				case let nilItem as HPNil:
-					return try nilItem.query(()).toArray()
+					return try nilItem.query((), encoding: encoding).toArray()
 				case let boolItem as HPBool:
-					return try boolItem.query(parameters[boolItem.name] as? Bool).toArray()
+					return try boolItem.query(parameters[boolItem.name] as? Bool, encoding: encoding).toArray()
 				case let stringItem as HPString:
-					return try stringItem.query(parameters[stringItem.name] as? String).toArray()
+					return try stringItem.query(parameters[stringItem.name] as? String, encoding: encoding).toArray()
 				case let integerItem as HPInt:
-					return try integerItem.query(parameters[integerItem.name] as? Int).toArray()
+					return try integerItem.query(parameters[integerItem.name] as? Int, encoding: encoding).toArray()
 				case let int8Item as HPInt8:
-					return try int8Item.query(parameters[int8Item.name] as? Int8).toArray()
+					return try int8Item.query(parameters[int8Item.name] as? Int8, encoding: encoding).toArray()
 				case let int16Item as HPInt16:
-					return try int16Item.query(parameters[int16Item.name] as? Int16).toArray()
+					return try int16Item.query(parameters[int16Item.name] as? Int16, encoding: encoding).toArray()
 				case let int32Item as HPInt32:
-					return try int32Item.query(parameters[int32Item.name] as? Int32).toArray()
+					return try int32Item.query(parameters[int32Item.name] as? Int32, encoding: encoding).toArray()
 				case let int64Item as HPInt64:
-					return try int64Item.query(parameters[int64Item.name] as? Int64).toArray()
+					return try int64Item.query(parameters[int64Item.name] as? Int64, encoding: encoding).toArray()
 				case let uintItem as HPUInt:
-					return try uintItem.query(parameters[uintItem.name] as? UInt).toArray()
+					return try uintItem.query(parameters[uintItem.name] as? UInt, encoding: encoding).toArray()
 				case let uint8Item as HPUInt8:
-					return try uint8Item.query(parameters[uint8Item.name] as? UInt8).toArray()
+					return try uint8Item.query(parameters[uint8Item.name] as? UInt8, encoding: encoding).toArray()
 				case let uint16Item as HPUInt16:
-					return try uint16Item.query(parameters[uint16Item.name] as? UInt16).toArray()
+					return try uint16Item.query(parameters[uint16Item.name] as? UInt16, encoding: encoding).toArray()
 				case let uint32Item as HPUInt32:
-					return try uint32Item.query(parameters[uint32Item.name] as? UInt32).toArray()
+					return try uint32Item.query(parameters[uint32Item.name] as? UInt32, encoding: encoding).toArray()
 				case let uint64Item as HPUInt64:
-					return try uint64Item.query(parameters[uint64Item.name] as? UInt64).toArray()
+					return try uint64Item.query(parameters[uint64Item.name] as? UInt64, encoding: encoding).toArray()
 				case let floatItem as HPFloat:
-					return try floatItem.query(parameters[floatItem.name] as? Float).toArray()
+					return try floatItem.query(parameters[floatItem.name] as? Float, encoding: encoding).toArray()
 				case let doubleItem as HPDouble:
-					return try doubleItem.query(parameters[doubleItem.name] as? Double).toArray()
+					return try doubleItem.query(parameters[doubleItem.name] as? Double, encoding: encoding).toArray()
 				case let patternItem as HPPattern:
-					return try patternItem.query(parameters)
+					return try patternItem.query(parameters, encoding: encoding)
 				default:
 #if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
 					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
 					   let float16Item = item as? HPFloat16 {
-						return try float16Item.query(parameters[float16Item.name] as? Float16).toArray()
+						return try float16Item.query(parameters[float16Item.name] as? Float16, encoding: encoding).toArray()
 					}
 #endif
 #if swift(>=1.1) && os(macOS)
 					if #available(macOS 10.10, *),
 					   let float80Item = item as? HPFloat80 {
-						return try float80Item.query(parameters[float80Item.name] as? Float80).toArray()
+						return try float80Item.query(parameters[float80Item.name] as? Float80, encoding: encoding).toArray()
 					}
 #endif
 					throw HttpParameterBuildError.invalidType

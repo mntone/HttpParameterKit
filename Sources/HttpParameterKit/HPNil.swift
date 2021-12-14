@@ -17,9 +17,10 @@ extension HPNil: HttpParameterInternal {}
 // MARK: - HttpParameterCodable
 
 extension HPNil: HttpParameterCodable {
-	func query(_ value: Void?) throws -> String? {
+	func query(_ value: Void?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if !suppressDefault {
-			return "\(name.toQuery())=\0"
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			return "\(_name)=\0"
 		} else {
 			return nil
 		}
