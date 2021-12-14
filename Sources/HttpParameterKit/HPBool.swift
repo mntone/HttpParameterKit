@@ -1,11 +1,11 @@
 import Foundation
 
 public struct HPBool: HttpParameter {
-	let name: String
-	private let defaultValue: Bool
-	let suppressDefault: Bool
-	private let falseOutput: String
-	private let trueOutput: String
+	public let name: String
+	public let defaultValue: Bool
+	public let suppressDefault: Bool
+	public let falseOutput: String
+	public let trueOutput: String
 
 	public init(_ name: String, default: Bool = false, suppressDefault: Bool = true, output: QueryOutputType = .upperOne) {
 		self.name = name
@@ -86,6 +86,7 @@ extension HPBool: HttpParameterInternal {}
 // MARK: - HttpParameterCodable
 
 extension HPBool: HttpParameterCodable {
+	@inlinable
 	func query(_ value: Bool?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if let val = value, !suppressDefault || val != defaultValue {
 			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
@@ -96,6 +97,7 @@ extension HPBool: HttpParameterCodable {
 		}
 	}
 
+	@inlinable
 	func xml(_ value: Bool?) throws -> String? {
 		if let val = value, !suppressDefault || val != defaultValue {
 			return "<\(name)>\(val ? "true" : "false")</\(name)>"
@@ -104,6 +106,7 @@ extension HPBool: HttpParameterCodable {
 		}
 	}
 
+	@inlinable
 	func json(_ value: Bool?) throws -> String? {
 		if let val = value, !suppressDefault || val != defaultValue {
 			return "\"\(name)\":\(val ? "true" : "false")"

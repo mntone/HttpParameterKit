@@ -1,8 +1,8 @@
 import Foundation
 
 public struct HPNil: HttpParameter {
-	let name: String
-	let suppressDefault: Bool
+	public let name: String
+	public let suppressDefault: Bool
 
 	public init(_ name: String, suppressDefault: Bool = true) {
 		self.name = name
@@ -17,6 +17,7 @@ extension HPNil: HttpParameterInternal {}
 // MARK: - HttpParameterCodable
 
 extension HPNil: HttpParameterCodable {
+	@inlinable
 	func query(_ value: Void?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if !suppressDefault {
 			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
@@ -26,6 +27,7 @@ extension HPNil: HttpParameterCodable {
 		}
 	}
 
+	@inlinable
 	func xml(_ value: Void?) throws -> String? {
 		if !suppressDefault {
 			return "<\(name)></\(name)>"
@@ -34,6 +36,7 @@ extension HPNil: HttpParameterCodable {
 		}
 	}
 
+	@inlinable
 	func json(_ value: Void?) throws -> String? {
 		if !suppressDefault {
 			return "\"\(name)\":null"

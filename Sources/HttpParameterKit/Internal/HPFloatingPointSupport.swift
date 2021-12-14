@@ -16,6 +16,7 @@ protocol HPFloatingPointSupport: HttpParameter {
 // MARK: -
 
 extension HPFloatingPointSupport {
+	@inlinable
 	func query(_ value: T?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if let val = value {
 			if clamped {
@@ -58,6 +59,7 @@ extension HPFloatingPointSupport {
 		}
 	}
 
+	@inlinable
 	func xml(_ value: T?) throws -> String? {
 		if let val = value {
 			if clamped {
@@ -95,6 +97,7 @@ extension HPFloatingPointSupport {
 		}
 	}
 
+	@inlinable
 	func json(_ value: T?) throws -> String? {
 		if let val = value {
 			if clamped {

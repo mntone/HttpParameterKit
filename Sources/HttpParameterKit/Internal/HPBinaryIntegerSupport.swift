@@ -16,6 +16,7 @@ protocol HPBinaryIntegerSupport: HttpParameter {
 // MARK: -
 
 extension HPBinaryIntegerSupport {
+	@inlinable
 	func query(_ value: T?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if let val = value {
 			if clamped {
@@ -58,6 +59,7 @@ extension HPBinaryIntegerSupport {
 		}
 	}
 
+	@inlinable
 	func xml(_ value: T?) throws -> String? {
 		if let val = value {
 			if clamped {
@@ -95,6 +97,7 @@ extension HPBinaryIntegerSupport {
 		}
 	}
 
+	@inlinable
 	func json(_ value: T?) throws -> String? {
 		if let val = value {
 			if clamped {
