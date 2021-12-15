@@ -4,7 +4,7 @@ public extension URLRequest {
 	mutating func setBodyAsQuery(_ parameters: [String: AnyHashable], define: [HttpParameter], encoding: _QueryUtil.Encoding = .default) throws {
 		do {
 			let query = try define.query(parameters, encoding: encoding)
-			httpBody = query.data(using: .utf8)!
+			httpBody = query.data(using: .utf8).unsafelyUnwrapped
 		} catch {
 			throw error
 		}
@@ -15,7 +15,7 @@ public extension URLRequest {
 	mutating func setBodyAsXml(_ parameters: [String: AnyHashable], define: [HttpParameter], root rootName: String) throws {
 		do {
 			let xml = try define.xml(parameters, root: rootName)
-			httpBody = xml.data(using: .utf8)!
+			httpBody = xml.data(using: .utf8).unsafelyUnwrapped
 		} catch {
 			throw error
 		}
@@ -26,7 +26,7 @@ public extension URLRequest {
 	mutating func setBodyAsJson(_ parameters: [String: AnyHashable], define: [HttpParameter]) throws {
 		do {
 			let json = try define.json(parameters)
-			httpBody = json.data(using: .utf8)!
+			httpBody = json.data(using: .utf8).unsafelyUnwrapped
 		} catch {
 			throw error
 		}
