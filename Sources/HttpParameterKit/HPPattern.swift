@@ -9,12 +9,12 @@ public struct HPPattern: HttpParameter {
 }
 
 extension HPPattern {
-	func query(_ value: [String: AnyHashable], encoding: _QueryUtil.Encoding) throws -> [String] {
+	func query(_ value: [String: AnyHashable], encoding: QueryEncoding) throws -> [String] {
 		guard let targetSet = sets.first(where: { $0.validateSet(value) }) else { return [] }
 		return try targetSet.query(value, encoding: encoding)
 	}
 
-	func querydata(_ value: [String: AnyHashable], encoding: _QueryUtil.Encoding) throws -> [HPPair] {
+	func querydata(_ value: [String: AnyHashable], encoding: QueryEncoding) throws -> [HPPair] {
 		guard let targetSet = sets.first(where: { $0.validateSet(value) }) else { return [] }
 		return try targetSet.querydata(value, encoding: encoding)
 	}

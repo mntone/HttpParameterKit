@@ -1,15 +1,7 @@
 import Foundation
 
 public struct _QueryUtil {
-	public enum Encoding: String, Hashable {
-		case `default`
-		case rfc1738safe
-		case rfc1738
-		case rfc2396
-		case rfc3986
-	}
-
-	public static func query(as str: String, encoding: Encoding = .default) -> String {
+	public static func query(from str: String, encoding: QueryEncoding = .default) -> String {
 		switch encoding {
 		case .default:
 			return str.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)

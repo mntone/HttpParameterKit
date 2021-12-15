@@ -8,7 +8,7 @@ private extension Optional {
 }
 
 public extension Collection where Iterator.Element == HttpParameter {
-	func query(_ parameters: [String: AnyHashable], encoding: _QueryUtil.Encoding = .default) throws -> String {
+	func query(_ parameters: [String: AnyHashable], encoding: QueryEncoding = .default) throws -> String {
 		do {
 			return try flatMap { item -> [String] in
 				switch item {
@@ -65,7 +65,7 @@ public extension Collection where Iterator.Element == HttpParameter {
 		}
 	}
 
-	func querydata(_ parameters: [String: AnyHashable], encoding: _QueryUtil.Encoding = .default) throws -> [HPPair] {
+	func querydata(_ parameters: [String: AnyHashable], encoding: QueryEncoding = .default) throws -> [HPPair] {
 		do {
 			return try flatMap { item -> [HPPair] in
 				switch item {

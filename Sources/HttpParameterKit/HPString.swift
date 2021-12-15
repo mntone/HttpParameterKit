@@ -19,28 +19,28 @@ extension HPString: HttpParameterInternal {}
 // MARK: - HttpParameterCodable
 
 extension HPString: HttpParameterCodable {
-	func query(_ value: String?, encoding: _QueryUtil.Encoding) throws -> String? {
+	func query(_ value: String?, encoding: QueryEncoding) throws -> String? {
 		if let val = value {
-			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
-			let _val: String = _QueryUtil.query(as: val, encoding: encoding)
+			let _name: String = _QueryUtil.query(from: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(from: val, encoding: encoding)
 			return "\(_name)=\(_val)"
 		} else if !suppressDefault {
-			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
-			let _val: String = _QueryUtil.query(as: defaultValue, encoding: encoding)
+			let _name: String = _QueryUtil.query(from: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(from: defaultValue, encoding: encoding)
 			return "\(_name)=\(_val)"
 		} else {
 			return nil
 		}
 	}
 
-	func querydata(_ value: String?, encoding: _QueryUtil.Encoding) throws -> HPPair? {
+	func querydata(_ value: String?, encoding: QueryEncoding) throws -> HPPair? {
 		if let val = value {
-			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
-			let _val: String = _QueryUtil.query(as: val, encoding: encoding)
+			let _name: String = _QueryUtil.query(from: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(from: val, encoding: encoding)
 			return (_name, _val)
 		} else if !suppressDefault {
-			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
-			let _val: String = _QueryUtil.query(as: defaultValue, encoding: encoding)
+			let _name: String = _QueryUtil.query(from: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(from: defaultValue, encoding: encoding)
 			return (_name, _val)
 		} else {
 			return nil

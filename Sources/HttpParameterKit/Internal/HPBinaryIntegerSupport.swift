@@ -17,17 +17,17 @@ protocol HPBinaryIntegerSupport: HttpParameter {
 
 extension HPBinaryIntegerSupport {
 	@inlinable
-	func query(_ value: T?, encoding: _QueryUtil.Encoding) throws -> String? {
+	func query(_ value: T?, encoding: QueryEncoding) throws -> String? {
 		if let val = value {
 			if clamped {
 				if let min = minValue, val < min {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return "\(_name)=\(min)"
 				} else if let max = maxValue, val > max {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return "\(_name)=\(max)"
 				} else if !suppressDefault || val != defaultValue {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return "\(_name)=\(val)"
 				} else {
 					return nil
@@ -45,14 +45,14 @@ extension HPBinaryIntegerSupport {
 				}
 
 				if !suppressDefault || val != defaultValue {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return "\(_name)=\(val)"
 				} else {
 					return nil
 				}
 			}
 		} else if !suppressDefault {
-			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 			return "\(_name)=\(defaultValue)"
 		} else {
 			return nil
@@ -60,17 +60,17 @@ extension HPBinaryIntegerSupport {
 	}
 
 	@inlinable
-	func querydata(_ value: T?, encoding: _QueryUtil.Encoding) throws -> HPPair? {
+	func querydata(_ value: T?, encoding: QueryEncoding) throws -> HPPair? {
 		if let val = value {
 			if clamped {
 				if let min = minValue, val < min {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return (_name, String(min))
 				} else if let max = maxValue, val > max {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return (_name, String(max))
 				} else if !suppressDefault || val != defaultValue {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return (_name, String(val))
 				} else {
 					return nil
@@ -88,14 +88,14 @@ extension HPBinaryIntegerSupport {
 				}
 
 				if !suppressDefault || val != defaultValue {
-					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 					return (_name, String(val))
 				} else {
 					return nil
 				}
 			}
 		} else if !suppressDefault {
-			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			let _name: String = _QueryUtil.query(from: name, encoding: encoding)
 			return (_name, String(defaultValue))
 		} else {
 			return nil

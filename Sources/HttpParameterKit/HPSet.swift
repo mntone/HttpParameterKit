@@ -24,7 +24,7 @@ public struct HPSet: HttpParameter {
 }
 
 extension HPSet {
-	func query(_ value: [String: AnyHashable], encoding: _QueryUtil.Encoding) throws -> [String] {
+	func query(_ value: [String: AnyHashable], encoding: QueryEncoding) throws -> [String] {
 		do {
 			return try (parameters + optionals).compactMap { item in
 				switch item {
@@ -79,7 +79,7 @@ extension HPSet {
 		}
 	}
 
-	func querydata(_ value: [String: AnyHashable], encoding: _QueryUtil.Encoding) throws -> [HPPair] {
+	func querydata(_ value: [String: AnyHashable], encoding: QueryEncoding) throws -> [HPPair] {
 		do {
 			return try (parameters + optionals).compactMap { item in
 				switch item {
