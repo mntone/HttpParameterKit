@@ -60,6 +60,49 @@ extension HPFloatingPointSupport {
 	}
 
 	@inlinable
+	func querydata(_ value: T?, encoding: _QueryUtil.Encoding) throws -> HPPair? {
+		if let val = value {
+			if clamped {
+				if let min = minValue, val < min {
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return (_name, "\(min)")
+				} else if let max = maxValue, val > max {
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return (_name, "\(max)")
+				} else if !suppressDefault || val != defaultValue {
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return (_name, "\(val)")
+				} else {
+					return nil
+				}
+			} else {
+				if let min = minValue {
+					if val < min {
+						throw HttpParameterBuildError.outOfRange
+					}
+				}
+				if let max = maxValue {
+					if val > max {
+						throw HttpParameterBuildError.outOfRange
+					}
+				}
+
+				if !suppressDefault || val != defaultValue {
+					let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+					return (_name, "\(val)")
+				} else {
+					return nil
+				}
+			}
+		} else if !suppressDefault {
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			return (_name, "\(defaultValue)")
+		} else {
+			return nil
+		}
+	}
+
+	@inlinable
 	func xml(_ value: T?) throws -> String? {
 		if let val = value {
 			if clamped {

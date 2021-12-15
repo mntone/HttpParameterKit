@@ -98,6 +98,17 @@ extension HPBool: HttpParameterCodable {
 	}
 
 	@inlinable
+	func querydata(_ value: Bool?, encoding: _QueryUtil.Encoding) throws -> HPPair? {
+		if let val = value, !suppressDefault || val != defaultValue {
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(as: val ? trueOutput : falseOutput, encoding: encoding)
+			return (_name, _val)
+		} else {
+			return nil
+		}
+	}
+
+	@inlinable
 	func xml(_ value: Bool?) throws -> String? {
 		if let val = value, !suppressDefault || val != defaultValue {
 			return "<\(name)>\(val ? "true" : "false")</\(name)>"

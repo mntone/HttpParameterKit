@@ -14,6 +14,11 @@ extension HPPattern {
 		return try targetSet.query(value, encoding: encoding)
 	}
 
+	func querydata(_ value: [String: AnyHashable], encoding: _QueryUtil.Encoding) throws -> [HPPair] {
+		guard let targetSet = sets.first(where: { $0.validateSet(value) }) else { return [] }
+		return try targetSet.querydata(value, encoding: encoding)
+	}
+
 	func xml(_ value: [String: AnyHashable]) throws -> [String] {
 		guard let targetSet = sets.first(where: { $0.validateSet(value) }) else { return [] }
 		return try targetSet.xml(value)

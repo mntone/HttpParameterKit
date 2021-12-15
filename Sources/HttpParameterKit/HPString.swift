@@ -22,10 +22,26 @@ extension HPString: HttpParameterCodable {
 	func query(_ value: String?, encoding: _QueryUtil.Encoding) throws -> String? {
 		if let val = value {
 			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
-			return "\(_name)=\(_QueryUtil.query(as: val, encoding: encoding))"
+			let _val: String = _QueryUtil.query(as: val, encoding: encoding)
+			return "\(_name)=\(_val)"
 		} else if !suppressDefault {
 			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
-			return "\(_name)=\(_QueryUtil.query(as: defaultValue, encoding: encoding))"
+			let _val: String = _QueryUtil.query(as: defaultValue, encoding: encoding)
+			return "\(_name)=\(_val)"
+		} else {
+			return nil
+		}
+	}
+
+	func querydata(_ value: String?, encoding: _QueryUtil.Encoding) throws -> HPPair? {
+		if let val = value {
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(as: val, encoding: encoding)
+			return (_name, _val)
+		} else if !suppressDefault {
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			let _val: String = _QueryUtil.query(as: defaultValue, encoding: encoding)
+			return (_name, _val)
 		} else {
 			return nil
 		}

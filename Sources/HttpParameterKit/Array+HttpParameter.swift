@@ -65,6 +65,63 @@ public extension Collection where Iterator.Element == HttpParameter {
 		}
 	}
 
+	func querydata(_ parameters: [String: AnyHashable], encoding: _QueryUtil.Encoding = .default) throws -> [HPPair] {
+		do {
+			return try flatMap { item -> [HPPair] in
+				switch item {
+				case let nilItem as HPNil:
+					return try nilItem.querydata((), encoding: encoding).toArray()
+				case let boolItem as HPBool:
+					return try boolItem.querydata(parameters[boolItem.name] as? Bool, encoding: encoding).toArray()
+				case let stringItem as HPString:
+					return try stringItem.querydata(parameters[stringItem.name] as? String, encoding: encoding).toArray()
+				case let integerItem as HPInt:
+					return try integerItem.querydata(parameters[integerItem.name] as? Int, encoding: encoding).toArray()
+				case let int8Item as HPInt8:
+					return try int8Item.querydata(parameters[int8Item.name] as? Int8, encoding: encoding).toArray()
+				case let int16Item as HPInt16:
+					return try int16Item.querydata(parameters[int16Item.name] as? Int16, encoding: encoding).toArray()
+				case let int32Item as HPInt32:
+					return try int32Item.querydata(parameters[int32Item.name] as? Int32, encoding: encoding).toArray()
+				case let int64Item as HPInt64:
+					return try int64Item.querydata(parameters[int64Item.name] as? Int64, encoding: encoding).toArray()
+				case let uintItem as HPUInt:
+					return try uintItem.querydata(parameters[uintItem.name] as? UInt, encoding: encoding).toArray()
+				case let uint8Item as HPUInt8:
+					return try uint8Item.querydata(parameters[uint8Item.name] as? UInt8, encoding: encoding).toArray()
+				case let uint16Item as HPUInt16:
+					return try uint16Item.querydata(parameters[uint16Item.name] as? UInt16, encoding: encoding).toArray()
+				case let uint32Item as HPUInt32:
+					return try uint32Item.querydata(parameters[uint32Item.name] as? UInt32, encoding: encoding).toArray()
+				case let uint64Item as HPUInt64:
+					return try uint64Item.querydata(parameters[uint64Item.name] as? UInt64, encoding: encoding).toArray()
+				case let floatItem as HPFloat:
+					return try floatItem.querydata(parameters[floatItem.name] as? Float, encoding: encoding).toArray()
+				case let doubleItem as HPDouble:
+					return try doubleItem.querydata(parameters[doubleItem.name] as? Double, encoding: encoding).toArray()
+				case let patternItem as HPPattern:
+					return try patternItem.querydata(parameters, encoding: encoding)
+				default:
+#if swift(>=5.3) && (os(iOS) || os(watchOS) || os(tvOS))
+					if #available(iOS 14.0, watchOS 7.0, tvOS 14.0, *),
+					   let float16Item = item as? HPFloat16 {
+						return try float16Item.querydata(parameters[float16Item.name] as? Float16, encoding: encoding).toArray()
+					}
+#endif
+#if swift(>=1.1) && os(macOS)
+					if #available(macOS 10.10, *),
+					   let float80Item = item as? HPFloat80 {
+						return try float80Item.querydata(parameters[float80Item.name] as? Float80, encoding: encoding).toArray()
+					}
+#endif
+					throw HttpParameterBuildError.invalidType
+				}
+			}
+		} catch {
+			throw error
+		}
+	}
+
 	func xml(_ parameters: [String: AnyHashable], root rootName: String) throws -> String {
 		do {
 			let xmlString = try flatMap { item -> [String] in

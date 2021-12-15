@@ -28,6 +28,16 @@ extension HPNil: HttpParameterCodable {
 	}
 
 	@inlinable
+	func querydata(_ value: Void?, encoding: _QueryUtil.Encoding) throws -> HPPair? {
+		if !suppressDefault {
+			let _name: String = _QueryUtil.query(as: name, encoding: encoding)
+			return (_name, "\0")
+		} else {
+			return nil
+		}
+	}
+
+	@inlinable
 	func xml(_ value: Void?) throws -> String? {
 		if !suppressDefault {
 			return "<\(name)></\(name)>"
